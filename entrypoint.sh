@@ -31,11 +31,11 @@ download_if_missing \
 
 download_if_missing \
   https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors \
-  $MODELS_DIR/unet/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
+  $MODELS_DIR/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
 
 download_if_missing \
   https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors \
-  $MODELS_DIR/unet/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
+  $MODELS_DIR/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
 
 download_if_missing \
   https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors \
