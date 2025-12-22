@@ -4,6 +4,7 @@ set -e
 MODELS_DIR=/opt/ComfyUI/models
 
 mkdir -p \
+  /opt/ComfyUI/user/default/workflows \
   $MODELS_DIR/text_encoders \
   $MODELS_DIR/vae \
   $MODELS_DIR/diffusion_models \
