@@ -22,7 +22,7 @@ RUN python3 -m venv comfy-env
 # 使用虚拟环境的 pip 安装
 RUN comfy-env/bin/pip install --upgrade pip setuptools wheel
 RUN comfy-env/bin/pip install comfy-cli
-RUN comfy-env/bin/pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu131
+RUN comfy-env/bin/pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 
 # ===== 使用 Comfy CLI 安装 ComfyUI =====
