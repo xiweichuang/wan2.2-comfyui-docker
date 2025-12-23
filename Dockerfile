@@ -26,10 +26,11 @@ WORKDIR /comfy
 # ===== 虚拟环境 =====
 RUN python3 -m venv comfy-env
 RUN comfy-env/bin/pip install --upgrade pip setuptools wheel
-RUN comfy-env/bin/pip install comfy-cli
 
 # ===== 安装 ComfyUI =====
-RUN /bin/bash -c "source comfy-env/bin/activate && comfy --workspace=/comfy/comfyui install"
+RUN comfy-env/bin/pip install comfy-cli
+RUN comfy-env/bin/comfy --workspace=/comfy/comfyui install
+
 
 # ===== 复制 entrypoint 并激活虚拟环境 =====
 COPY entrypoint.sh /entrypoint.sh
