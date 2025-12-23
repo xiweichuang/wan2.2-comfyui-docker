@@ -5,36 +5,28 @@ ENV PYTHONUNBUFFERED=1
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
-# ===== 安装系统依赖 =====
+# ===== 系统依赖 =====
 RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-venv \
-    python3-pip \
-    git \
-    wget \
-    curl \
-    ffmpeg \
-    libgl1 \
-    libglib2.0-0 \
-    ca-certificates \
-    build-essential \
-    cmake \
+    python3 python3-venv python3-pip \
+    git wget curl ffmpeg \
+    libgl1 libglib2.0-0 ca-certificates \
+    build-essential cmake \
     && rm -rf /var/lib/apt/lists/*
 
-# ===== 设置工作目录 =====
+# ===== 工作目录 =====
 WORKDIR /comfy
 
-# ===== 克隆 ComfyUI =====
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git
+# ===== 创建虚拟环境并激活 =====
+RUN python3 -m venv comfy-env && \
+    /bin/bash -c "source comfy-env/bin/activate && \
+    pip install --upgrade pip setuptools wheel && \
+    pip install comfy-cli && \
+    pip install torch==2.3.0+cu131 torchvision==0.18.1+cu131 torchaudio==2.3.0+cu131 --index-url https://download.pytorch.org/whl/cu131"
 
-WORKDIR /comfy/ComfyUI
+# ===== 使用 Comfy CLI 安装 ComfyUI =====
+RUN /bin/bash -c "source comfy-env/bin/activate && \
+    comfy --workspace=/comfy/comfyui install"
 
-# ===== 使用 venv 安装 Python 依赖 =====
-RUN python3 -m venv venv && \
-    venv/bin/pip install --upgrade pip setuptools wheel && \
-    venv/bin/pip install torch==2.3.0+cu131 torchvision==0.18.1+cu131 torchaudio==2.3.0+cu131 \
-        --index-url https://download.pytorch.org/whl/cu131 && \
-    venv/bin/pip install -r requirements.txt
 
 # ===== 复制 entrypoint.sh =====
 COPY entrypoint.sh /entrypoint.sh
