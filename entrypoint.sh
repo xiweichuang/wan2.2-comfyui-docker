@@ -62,4 +62,4 @@ echo "🚀 Starting ComfyUI API..." > /access.log
 cd $COMFY_ROOT
 source venv/bin/activate
 
-exec python main.py --listen 0.0.0.0 --port 8188
+exec python main.py --auto-install --listen 0.0.0.0 --port 8188
