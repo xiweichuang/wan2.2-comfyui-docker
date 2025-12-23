@@ -1,5 +1,5 @@
 # ===== 基础镜像 =====
-FROM pytorch/pytorch:2.9.1-cuda13.0-cudnn9-devel
+FROM pytorch/pytorch:2.9.1-cuda13.0-cudnn9-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
