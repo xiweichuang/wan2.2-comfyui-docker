@@ -61,14 +61,38 @@ echo "🚀 Starting ComfyUI API..." > /access.log
 # ===== 激活 venv =====
 source $COMFY_VENV/bin/activate
 
-# ===== 启动前：根据 workflow 安装缺失节点 =====
-if [ -f "$WORKFLOW_JSON" ] && [ -d "$MANAGER_DIR" ]; then
-  echo "🧩 Installing missing custom nodes from workflow..."
-  cd $MANAGER_DIR
-  python cm-cli.py install-missing --workflow "$WORKFLOW_JSON"
-else
-  echo "⚠️  Skip install-missing (workflow or manager not found)"
-fi
+export COMFYUI_PATH=/comfy/ComfyUI
+
+# ===== 核心依赖（锁死 numpy < 2）=====
+pip install --no-cache-dir --force-reinstall \
+"numpy==1.26.4" \
+torch torchvision torchaudio \
+pillow huggingface_hub accelerate optimum av \
+"transformers>=4.57.1" qwen-vl-utils \
+opencv-python-headless>=4.7.0.72 \
+scikit-learn scikit-image imageio_ffmpeg pykalman \
+insightface ultralytics \
+onnxruntime-gpu==1.18.0 onnxruntime==1.18.0 \
+bitsandbytes triton
+
+
+
+# 安装 workflow 需要的所有节点
+python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py install \
+  ComfyUI-Easy-Use \
+  ComfyUI-KJNodes \
+  ComfyUI-VideoHelperSuite \
+  ComfyUI_essentials \
+  CoCoTools_IO \
+  ComfyUI-tbox \
+  Comfyui_Qwen3-VL-Instruct \
+  rgthree-comfy \
+  --mode remote
+
+# 修复依赖
+python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py restore-dependencies
+
+
 
 # ===== 启动 ComfyUI =====
 echo "🚀 Starting ComfyUI API..."
