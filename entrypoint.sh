@@ -58,8 +58,19 @@ download_if_missing \
 echo "🚀 Starting ComfyUI API..."
 echo "🚀 Starting ComfyUI API..." > /access.log
 
-# ===== 启动 ComfyUI =====
-cd $COMFY_ROOT
+# ===== 激活 venv =====
 source $COMFY_VENV/bin/activate
 
-exec python main.py  --listen 0.0.0.0 --port 8188
+# ===== 启动前：根据 workflow 安装缺失节点 =====
+if [ -f "$WORKFLOW_JSON" ] && [ -d "$MANAGER_DIR" ]; then
+  echo "🧩 Installing missing custom nodes from workflow..."
+  cd $MANAGER_DIR
+  python cm-cli.py install-missing --workflow "$WORKFLOW_JSON"
+else
+  echo "⚠️  Skip install-missing (workflow or manager not found)"
+fi
+
+# ===== 启动 ComfyUI =====
+echo "🚀 Starting ComfyUI API..."
+cd $COMFY_ROOT
+exec python main.py --listen 0.0.0.0 --port 8188
