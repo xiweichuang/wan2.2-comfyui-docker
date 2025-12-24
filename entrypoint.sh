@@ -54,9 +54,6 @@ download_if_missing \
   $COMFY_ROOT/user/default/workflows/Wan2.2-Remix-I2V-Comfy-Qwen3.json
 
 
-# ===== 日志 =====
-echo "🚀 Starting ComfyUI API..."
-echo "🚀 Starting ComfyUI API..." > /access.log
 
 # ===== 激活 venv =====
 source $COMFY_VENV/bin/activate
@@ -95,6 +92,10 @@ python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py restore-dependencie
 
 
 # ===== 启动 ComfyUI =====
-echo "🚀 Starting ComfyUI API..."
 cd $COMFY_ROOT
 exec python main.py --listen 0.0.0.0 --port 8188
+
+
+# ===== 日志 =====
+echo "🚀 Starting ComfyUI API..."
+echo "🚀 Starting ComfyUI API..." > /access.log
