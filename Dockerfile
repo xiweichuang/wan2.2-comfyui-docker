@@ -29,8 +29,8 @@ RUN python3 -m venv comfy-env
 RUN ./comfy-env/bin/python -m pip install --upgrade pip setuptools wheel
 
 # ===== 从 Git 安装 ComfyUI =====
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git comfyui
-WORKDIR /comfy/comfyui
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git Comfyui
+WORKDIR /comfy/Comfyui
 
 # 安装 Python 依赖（使用虚拟环境的 python）
 RUN ../comfy-env/bin/python -m pip install --no-cache-dir -r requirements.txt
