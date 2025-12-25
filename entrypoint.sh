@@ -62,7 +62,7 @@ export COMFYUI_PATH=/comfy/ComfyUI
 
 # ===== 核心依赖（锁死 numpy < 2）=====
 pip install --no-cache-dir \
-"numpy==1.26.4" \
+"numpy" \
 torch torchvision torchaudio \
 pillow huggingface_hub accelerate optimum av \
 "transformers>=4.57.1" qwen-vl-utils \
@@ -75,6 +75,7 @@ bitsandbytes triton typer GitPython toml chardet
 
 
 # 安装 workflow 需要的所有节点
+
 
 python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py install \
   https://github.com/yolain/ComfyUI-Easy-Use \
