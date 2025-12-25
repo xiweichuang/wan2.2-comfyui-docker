@@ -84,6 +84,7 @@ python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py install \
   https://github.com/cubiq/ComfyUI_essentials \
   https://github.com/Conor-Collins/ComfyUI-CoCoTools_IO \
   https://github.com/shizuka-ai/ComfyUI-tbox \
+  https://github.com/negaga53/comfyui-imgloader \
   https://github.com/rgthree/rgthree-comfy
 
 
