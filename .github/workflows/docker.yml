@@ -17,8 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔥 关键：释放 GitHub Actions 磁盘空间
-      - name: Free Disk Space (Ubuntu)
+      # ===== 构建前磁盘空间 =====
+      - name: 磁盘空间（构建前）
+        run: |
+          echo "📦 构建前磁盘使用情况："
+          df -h
+
+      # 🔥 释放 GitHub Actions 磁盘空间
+      - name: 释放磁盘空间
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true
@@ -28,21 +34,51 @@ jobs:
           large-packages: true
           swap-storage: true
 
-      - name: Set up Docker Buildx
+      # ===== 释放后磁盘空间 =====
+      - name: 磁盘空间（清理后）
+        run: |
+          echo "🧹 清理后磁盘使用情况："
+          df -h
+
+      - name: 设置 Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to GHCR
+      - name: 登录 GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      # ===== 构建并推送镜像 =====
+      - name: 构建并推送 Docker 镜像
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/comfyui-wan2.2:latest
-          # 可选：减少缓存占用（更稳）
           provenance: false
+
+      # ===== 构建后磁盘空间 =====
+      - name: 磁盘空间（构建后）
+        run: |
+          echo "📊 构建完成后磁盘使用情况："
+          df -h
+
+      # ===== Docker 镜像大小 =====
+      - name: Docker 镜像体积统计
+        run: |
+          echo "🐳 当前 Docker 镜像列表："
+          docker images | grep comfyui-wan2.2 || true
+
+          echo ""
+          echo "📦 镜像详细体积信息："
+          IMAGE_ID=$(docker images ghcr.io/${{ github.repository_owner }}/comfyui-wan2.2:latest --quiet)
+          if [ -n "$IMAGE_ID" ]; then
+            docker image inspect $IMAGE_ID --format='
+            镜像 ID: {{.Id}}
+            实际大小: {{printf "%.2f" (div .Size 1073741824)}} GB
+            '
+          else
+            echo "⚠️ 本地未找到镜像（可能已被清理或只推送未保留）"
+          fi
