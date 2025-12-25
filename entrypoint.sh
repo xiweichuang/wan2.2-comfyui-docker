@@ -75,7 +75,6 @@ bitsandbytes triton typer GitPython toml chardet
 
 
 # 安装 workflow 需要的所有节点
-python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py cli-only-mode enable
 
 python /comfy/ComfyUI/custom_nodes/comfyui-manager/cm-cli.py install \
   https://github.com/yolain/ComfyUI-Easy-Use \
