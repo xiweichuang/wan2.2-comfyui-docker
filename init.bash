@@ -922,6 +922,7 @@ repos=(
   "https://github.com/shizuka-ai/ComfyUI-tbox"
   "https://github.com/negaga53/comfyui-imgloader"
   "https://github.com/rgthree/rgthree-comfy"
+  "https://github.com/orssorbit/ComfyUI-wanBlockswap"
 )
 
 for repo in "${repos[@]}"; do
