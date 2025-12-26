@@ -90,7 +90,7 @@ RUN useradd -u 1025 -d /home/comfytoo -g comfytoo -s /bin/bash -m comfytoo \
     && adduser comfytoo sudo
 
 ENV COMFYUSER_DIR="/comfy"
-ENV USE_UV=true \
+ENV USE_UV=false \
     WANTED_UID=0 \
     WANTED_GID=0 \
     SECURITY_LEVEL=normal
