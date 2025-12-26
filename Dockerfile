@@ -90,12 +90,17 @@ RUN useradd -u 1025 -d /home/comfytoo -g comfytoo -s /bin/bash -m comfytoo \
     && adduser comfytoo sudo
 
 ENV COMFYUSER_DIR="/comfy"
-ENV USE_UV=true \
+ENV USE_UV=false \
     WANTED_UID=0 \
     WANTED_GID=0 \
     SECURITY_LEVEL=normal
 RUN mkdir -p ${COMFYUSER_DIR}
 RUN it="/etc/comfyuser_dir"; echo ${COMFYUSER_DIR} > $it && chmod 555 $it
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh \
+    && export PATH=/home/comfy/.local/bin:$PATH \
+    && uv --version
+
 
 ENV NVIDIA_DRIVER_CAPABILITIES="all"
 ENV NVIDIA_VISIBLE_DEVICES=all
