@@ -906,6 +906,16 @@ else
   echo "== Wan 2.2 models already present, skipping download =="
 fi
 
+cd /comfy/ComfyUI/custom_nodes
+git clone https://github.com/yolain/ComfyUI-Easy-Use
+git clone https://github.com/kijai/ComfyUI-KJNodes
+git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+git clone https://github.com/IuvenisSapiens/ComfyUI_Qwen3-VL-Instruct
+git clone https://github.com/cubiq/ComfyUI_essentials
+git clone https://github.com/Conor-Collins/ComfyUI-CoCoTools_IO
+git clone https://github.com/shizuka-ai/ComfyUI-tbox
+git clone https://github.com/negaga53/comfyui-imgloader
+git clone https://github.com/rgthree/rgthree-comfy
 
 
 
