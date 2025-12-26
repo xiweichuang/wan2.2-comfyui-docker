@@ -841,6 +841,76 @@ fi
 cd ${COMFYUI_PATH}
 echo "";echo -n "== Container directory: "; pwd
 
+
+
+
+
+# ============================================================
+# Download default Wan 2.2 models (run once, comfy user)
+# ============================================================
+
+COMFY_ROOT=/comfy/mnt/ComfyUI
+MODELS_DIR=${COMFY_ROOT}/mnt/models
+
+# marker file to avoid re-downloading
+MODELS_READY_FLAG=/comfy/mnt/.models_ready
+
+if [ ! -f "${MODELS_READY_FLAG}" ]; then
+  echo "== Downloading default Wan 2.2 models =="
+
+  mkdir -p \
+    ${COMFY_ROOT}/user/default/workflows \
+    ${MODELS_DIR}/text_encoders \
+    ${MODELS_DIR}/vae \
+    ${MODELS_DIR}/unet
+
+  download_if_missing () {
+    local url="$1"
+    local dest="$2"
+
+    if [ ! -f "$dest" ]; then
+      echo "⬇️  Downloading $(basename "$dest")"
+      wget -c "$url" -O "$dest"
+    else
+      echo "✅ Found $(basename "$dest"), skip"
+    fi
+  }
+
+  # ===== Wan 2.2 UNet =====
+  download_if_missing \
+    https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_v2.0.safetensors \
+    ${MODELS_DIR}/unet/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_v2.0.safetensors
+
+  download_if_missing \
+    https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_v2.0.safetensors \
+    ${MODELS_DIR}/unet/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_v2.0.safetensors
+
+  # ===== Text Encoder =====
+  download_if_missing \
+    https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors \
+    ${MODELS_DIR}/text_encoders/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
+
+  # ===== VAE =====
+  download_if_missing \
+    https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors \
+    ${MODELS_DIR}/vae/wan_2.1_vae.safetensors
+
+  # ===== Workflow =====
+  download_if_missing \
+    https://raw.githubusercontent.com/xiweichuang/wan2.2-comfyui-docker/refs/heads/main/Wan2.2-Remix-I2V-Comfy-Qwen3.json \
+    ${COMFY_ROOT}/user/default/workflows/Wan2.2-Remix-I2V-Comfy-Qwen3.json
+
+  touch "${MODELS_READY_FLAG}"
+  echo "== Wan 2.2 models download completed =="
+else
+  echo "== Wan 2.2 models already present, skipping download =="
+fi
+
+
+
+
+
+
 # Saving environment variables
 it=/tmp/comfy_env.txt
 save_env $it
