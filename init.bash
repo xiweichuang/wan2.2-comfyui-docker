@@ -399,7 +399,7 @@ echo ""; echo "== Obtaining the latest version of ComfyUI (if folder not present
 cd $it_dir # ${COMFYUSER_DIR} -- stay here for the following checks/setups
 if [ ! -d "ComfyUI" ]; then
   echo ""; echo "== Cloning ComfyUI"
-  git clone https://github.com/comfyanonymous/ComfyUI.git ComfyUI || error_exit "ComfyUI clone failed"
+  git clone --branch v0.4.0 --single-branch https://github.com/comfyanonymous/ComfyUI.git ComfyUI || error_exit "ComfyUI clone failed"
   if [ "$A{DISABLE_UPGRADES}" == "Atrue" ]; then
     echo ""; echo "== This is a new installation, setting DISABLE_UPGRADES to false"
     DISABLE_UPGRADES=false
@@ -909,35 +909,35 @@ fi
 
 
 
-# cd $COMFY_ROOT/custom_nodes
+cd $COMFY_ROOT/custom_nodes
 
-# # 定义仓库列表
-# repos=(
-#   "https://github.com/yolain/ComfyUI-Easy-Use"
-#   "https://github.com/kijai/ComfyUI-KJNodes"
-#   "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
-#   "https://github.com/IuvenisSapiens/ComfyUI_Qwen3-VL-Instruct"
-#   "https://github.com/cubiq/ComfyUI_essentials"
-#   "https://github.com/Conor-Collins/ComfyUI-CoCoTools_IO"
-#   "https://github.com/shizuka-ai/ComfyUI-tbox"
-#   "https://github.com/negaga53/comfyui-imgloader"
-#   "https://github.com/rgthree/rgthree-comfy"
-#   "https://github.com/orssorbit/ComfyUI-wanBlockswap"
-# )
+# 定义仓库列表
+repos=(
+  "https://github.com/yolain/ComfyUI-Easy-Use"
+  "https://github.com/kijai/ComfyUI-KJNodes"
+  "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+  "https://github.com/IuvenisSapiens/ComfyUI_Qwen3-VL-Instruct"
+  "https://github.com/cubiq/ComfyUI_essentials"
+  "https://github.com/Conor-Collins/ComfyUI-CoCoTools_IO"
+  "https://github.com/shizuka-ai/ComfyUI-tbox"
+  "https://github.com/negaga53/comfyui-imgloader"
+  "https://github.com/rgthree/rgthree-comfy"
+  "https://github.com/orssorbit/ComfyUI-wanBlockswap"
+)
 
-# for repo in "${repos[@]}"; do
-#   # 获取 repo 名称
-#   name=$(basename "$repo" .git)
-#   if [ -d "$name" ]; then
-#     echo "目录 $name 已存在，跳过 clone"
-#     # 如果你想更新，可以改成 git pull
-#     # cd "$name" && git pull && cd ..
-#   else
-#     git clone "$repo"
-#   fi
-# done
+for repo in "${repos[@]}"; do
+  # 获取 repo 名称
+  name=$(basename "$repo" .git)
+  if [ -d "$name" ]; then
+    echo "目录 $name 已存在，跳过 clone"
+    # 如果你想更新，可以改成 git pull
+    # cd "$name" && git pull && cd ..
+  else
+    git clone "$repo"
+  fi
+done
 
-# cd $COMFY_ROOT
+cd $COMFY_ROOT
 
 
 
