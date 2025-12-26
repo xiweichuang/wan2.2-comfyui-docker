@@ -1,6 +1,7 @@
 FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
 ARG BASE_DOCKER_FROM=nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04##### Base
 
+
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y --fix-missing\
@@ -63,7 +64,7 @@ ARG BASE_DOCKER_FROM
 RUN echo "DOCKER_FROM: ${BASE_DOCKER_FROM}" | tee ${BUILD_FILE}
 RUN echo "CUDNN: ${NV_CUDNN_PACKAGE_NAME} (${NV_CUDNN_VERSION})" | tee -a ${BUILD_FILE}
 
-ARG BUILD_BASE="unknown"
+ARG BUILD_BASE="ubuntu24_cuda12.6.3"
 LABEL comfyui-nvidia-docker-build-from=${BUILD_BASE}
 RUN it="/etc/build_base.txt"; echo ${BUILD_BASE} > $it && chmod 555 $it
 
