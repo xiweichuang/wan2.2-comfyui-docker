@@ -1,6 +1,6 @@
-FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
-ARG BASE_DOCKER_FROM=nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04##### Base
-
+FROM nvidia/cuda:13.0.2-cudnn-devel-ubuntu24.04
+ARG BASE_DOCKER_FROM=nvidia/cuda:13.0.2-cudnn-devel-ubuntu24.04
+##### Base
 
 # Install system packages
 ENV DEBIAN_FRONTEND=noninteractive
@@ -64,7 +64,7 @@ ARG BASE_DOCKER_FROM
 RUN echo "DOCKER_FROM: ${BASE_DOCKER_FROM}" | tee ${BUILD_FILE}
 RUN echo "CUDNN: ${NV_CUDNN_PACKAGE_NAME} (${NV_CUDNN_VERSION})" | tee -a ${BUILD_FILE}
 
-ARG BUILD_BASE="ubuntu24_cuda12.6.3"
+ARG BUILD_BASE="ubuntu24_cuda13.0.2"
 LABEL comfyui-nvidia-docker-build-from=${BUILD_BASE}
 RUN it="/etc/build_base.txt"; echo ${BUILD_BASE} > $it && chmod 555 $it
 
@@ -96,8 +96,6 @@ ENV USE_UV=false \
     SECURITY_LEVEL=normal
 RUN mkdir -p ${COMFYUSER_DIR}
 RUN it="/etc/comfyuser_dir"; echo ${COMFYUSER_DIR} > $it && chmod 555 $it
-
-
 
 ENV NVIDIA_DRIVER_CAPABILITIES="all"
 ENV NVIDIA_VISIBLE_DEVICES=all
