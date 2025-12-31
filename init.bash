@@ -498,6 +498,7 @@ fi
 echo ""
 echo "== Installing HuggingFace CLI (hf)"
 ${PIP3_CMD} "huggingface_hub>=0.20" || error_exit "huggingface_hub install failed"
+${PIP3_CMD} "accelerate" || error_exit "huggingface_hub install failed"
 
 
 # extent the PATH to include the user local bin directory
