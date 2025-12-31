@@ -495,6 +495,11 @@ if [ "A${DISABLE_UPGRADES}" != "Atrue" ]; then
   ${PIP3_CMD} pip || error_exit "Pip upgrade failed"
 fi
 
+echo ""
+echo "== Installing HuggingFace CLI (hf)"
+${PIP3_CMD} "huggingface_hub>=0.20" || error_exit "huggingface_hub install failed"
+
+
 # extent the PATH to include the user local bin directory
 export PATH=${COMFYUSER_DIR}/.local/bin:${PATH}
 
@@ -932,12 +937,15 @@ done
 cd $COMFY_ROOT
 
 
+
+
+
 mkdir -p ${MODELS_DIR}/LLM/Qwen-VL
 cd ${MODELS_DIR}/LLM/Qwen-VL
 
 # 定义仓库列表
 repos=(
-  "https://huggingface.co/huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated"
+  "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated"
 )
 
 for repo in "${repos[@]}"; do
@@ -948,7 +956,7 @@ for repo in "${repos[@]}"; do
     # 如果你想更新，可以改成 git pull
     # cd "$name" && git pull && cd ..
   else
-    git clone "$repo"
+    hf download "$repo"  --local-dir ${MODELS_DIR}/LLM/Qwen-VL/Qwen3-VL-8B-Instruct
   fi
 done
 
