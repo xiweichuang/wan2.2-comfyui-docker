@@ -946,7 +946,7 @@ cd ${MODELS_DIR}/LLM/Qwen-VL
 
 # 定义仓库列表
 repos=(
-  "huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated"
+  "huihui-ai/Huihui-Qwen3-VL-2B-Instruct-abliterated"
 )
 
 for repo in "${repos[@]}"; do
@@ -957,7 +957,7 @@ for repo in "${repos[@]}"; do
     # 如果你想更新，可以改成 git pull
     # cd "$name" && git pull && cd ..
   else
-    hf download "$repo"  --local-dir ${MODELS_DIR}/LLM/Qwen-VL/Qwen3-VL-8B-Instruct
+    hf download "$repo"  --local-dir ${MODELS_DIR}/LLM/Qwen-VL/Qwen3-VL-2B-Instruct
   fi
 done
 
